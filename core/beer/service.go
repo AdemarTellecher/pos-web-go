@@ -20,7 +20,7 @@ func NewService() *Service {
 	return &Service{}
 }
 
-// Declarando as funções que implementam a interface UseCase{}, que serão implentadas posteriomente
+// Declarando as (funções/metodos) que implementam a interface UseCase{}, que serão implentadas posteriomente
 func (s *Service) GetAll() ([]*Beer, error) {
 	return nil, nil
 }
