@@ -58,6 +58,7 @@ const (
 	StyleGolden
 	StyleFruit
 	StyleHoney
+	StyleSoft
 )
 
 func (t BeerStyle) StyleBeer() string {
@@ -88,8 +89,10 @@ func (t BeerStyle) StyleBeer() string {
 		return "Golden"
 	case StyleFruit:
 		return "Fruit"
-	case StyleHoney:
+	case StyleSoft:
 		return "Honey"
+	case StyleHoney:
+		return "Soft"
 	}
 	return "Unknown" // Retorna desconhecida
 }
