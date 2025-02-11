@@ -1,21 +1,25 @@
-package beer_test
+package services_test
 
 import (
 	"database/sql"
 	"testing"
 
-	"github.com/AdemarTellecher/pos-web-go/core/beer"
+	_ "github.com/mattn/go-sqlite3"
+
+	"github.com/AdemarTellecher/pos-web-go/core/entities"
+	"github.com/AdemarTellecher/pos-web-go/core/services"
 )
 
 func TestStore(t *testing.T) {
-	b := &beer.Beer{
+	b := &entities.Beer{
 		ID:    1,
 		Name:  "Heiniken",
-		Type:  beer.TypeAle,
-		Style: beer.StylePale,
+		Type:  entities.TypeAle,
+		Style: entities.StylePale,
 	}
 	// Teste de conexão com o banco de dados
-	db, err := sql.Open("sqlite3", "../../database/beer_test.db")
+	//dbPath := "../../database/"
+	db, err := sql.Open("sqlite3", "../database/beer_test.db")
 	if err != nil {
 		t.Fatalf("Erro ao se conectar com o bando de dados %s", err.Error())
 	}
@@ -28,13 +32,13 @@ func TestStore(t *testing.T) {
 	}
 
 	// Teste de gravação no banco de dados
-	services := beer.NewService(db)
-	err = services.Store(b)
+	service := services.NewService(db)
+	err = service.Store(b)
 	if err != nil {
 		t.Fatalf("Erro ao gravar os dados no banco %s", err.Error())
 	}
 	//Teste de busca no banco de dados
-	saved, err := services.Get(1)
+	saved, err := service.Get(1)
 	if err != nil {
 		t.Fatalf("Erro ao fazer busca no banco de dados...%s", err.Error())
 	}

@@ -1,16 +1,20 @@
-package beer
+package services
 
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/mattn/go-sqlite3"
+
+	"github.com/AdemarTellecher/pos-web-go/core/entities"
 )
 
 // Define a interface com as funções que serão usadas pelo restante do projeto
 type UseCase interface {
-	GetAll() ([]*Beer, error)
-	Get(ID int64) (*Beer, error)
-	Store(b *Beer) error
-	Update(b *Beer) error
+	GetAll() ([]*entities.Beer, error)
+	Get(ID int64) (*entities.Beer, error)
+	Store(b *entities.Beer) error
+	Update(b *entities.Beer) error
 	Remove(ID int64) error
 }
 
@@ -30,13 +34,13 @@ func NewService(db *sql.DB) *Service {
 }
 
 // Declarando as (funções/metodos) que implementam a interface UseCase{}, que serão implentadas posteriomente
-func (s *Service) GetAll() ([]*Beer, error) {
+func (s *Service) GetAll() ([]*entities.Beer, error) {
 	// Result é um slice de ponteiros do tipo Beer
 	// Se existir um erro, a função vai retorna-lo, e o erro deve ser tratado
 	// pelo chamador de função.
 	//Vamos sempre usar a conexão que esta dentro do Service
 
-	var result []*Beer
+	var result []*entities.Beer
 
 	rows, err := s.DB.Query("select id, name, type, style from beers")
 	if err != nil {
@@ -45,7 +49,7 @@ func (s *Service) GetAll() ([]*Beer, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var b Beer
+		var b entities.Beer
 
 		err = rows.Scan(&b.ID, &b.Name, &b.Type, &b.Style)
 		if err != nil {
@@ -56,9 +60,9 @@ func (s *Service) GetAll() ([]*Beer, error) {
 	return result, nil
 }
 
-func (s *Service) Get(ID int64) (*Beer, error) {
+func (s *Service) Get(ID int64) (*entities.Beer, error) {
 	// A variavel 'b' é do tipo Beer e recebe valores somente deste tipo
-	var b Beer
+	var b entities.Beer
 
 	// Verificando se a consulta esta valida
 	stmt, err := s.DB.Prepare("select id, name, type, style from berrs where id=?")
@@ -75,7 +79,7 @@ func (s *Service) Get(ID int64) (*Beer, error) {
 	return &b, nil
 }
 
-func (s *Service) Store(b *Beer) error {
+func (s *Service) Store(b *entities.Beer) error {
 	// Iniciando uma transação com o banco de dados
 	tx, err := s.DB.Begin()
 	if err != nil {
@@ -98,9 +102,9 @@ func (s *Service) Store(b *Beer) error {
 	return nil
 }
 
-func (s *Service) Update(b *Beer) error {
+func (s *Service) Update(b *entities.Beer) error {
 	if b.ID <= 0 {
-		return fmt.Errorf("ID %q invalido!..", b.ID)
+		return fmt.Errorf("ID: %q é invalido ", b.ID)
 	}
 
 	tx, err := s.DB.Begin()
@@ -127,7 +131,7 @@ func (s *Service) Update(b *Beer) error {
 
 func (s *Service) Remove(ID int64) error {
 	if ID <= 0 {
-		return fmt.Errorf("ID: %q invalido!", ID)
+		return fmt.Errorf("ID: %q é invalido", ID)
 	}
 
 	tx, err := s.DB.Begin()

@@ -1,4 +1,4 @@
-package beer
+package entities
 
 // as tagh json define como os dados vão ser transformados em json
 type Beer struct {
