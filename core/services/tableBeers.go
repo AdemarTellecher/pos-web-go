@@ -65,7 +65,7 @@ func (s *Service) Get(ID int64) (*entities.Beer, error) {
 	var b entities.Beer
 
 	// Verificando se a consulta esta valida
-	stmt, err := s.DB.Prepare("select id, name, type, style from berrs where id=?")
+	stmt, err := s.DB.Prepare("select id, name, type, style from beers where id=?")
 	if err != nil {
 		return nil, err
 	}

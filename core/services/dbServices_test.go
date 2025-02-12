@@ -19,7 +19,7 @@ func TestStore(t *testing.T) {
 	}
 	// Teste de conexão com o banco de dados
 	//dbPath := "../../database/"
-	db, err := sql.Open("sqlite3", "../database/beer_test.db")
+	db, err := sql.Open("sqlite3", "../../database/beer_test.db")
 	if err != nil {
 		t.Fatalf("Erro ao se conectar com o bando de dados %s", err.Error())
 	}
@@ -35,7 +35,7 @@ func TestStore(t *testing.T) {
 	service := services.NewService(db)
 	err = service.Store(b)
 	if err != nil {
-		t.Fatalf("Erro ao gravar os dados no banco %s", err.Error())
+		t.Fatalf("Erro ao gravar os dados no banco: %s", err.Error())
 	}
 	//Teste de busca no banco de dados
 	saved, err := service.Get(1)
