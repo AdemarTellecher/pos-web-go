@@ -10,3 +10,5 @@ Link de acesso a playlist do youtube, com os videos do estudo.
 - Iniciando o aprendizado do video 2, e migrando tudo para branch 2-services
 
 [playlist]: https://www.youtube.com/playlist?list=PL0qudqr7_CuStQUsf2vtHXMxOp5gl_ENc
+
+- Na branch 4-dataBase, fizemos toda implementação dos testes no banco de dados..
