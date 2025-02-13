@@ -11,15 +11,17 @@ import (
 )
 
 func TestStore(t *testing.T) {
+	// ID utilizado para fazer teste de consulta por ID no banco de dados
+	dbPath := "../../database/beer_test.db"
+	var getID int64 = 0
+
 	b := &entities.Beer{
-		ID:    1,
 		Name:  "Heiniken",
 		Type:  entities.TypeAle,
 		Style: entities.StylePale,
 	}
 	// Teste de conexão com o banco de dados
-	//dbPath := "../../database/"
-	db, err := sql.Open("sqlite3", "../../database/beer_test.db")
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		t.Fatalf("Erro ao se conectar com o bando de dados %s", err.Error())
 	}
@@ -38,12 +40,12 @@ func TestStore(t *testing.T) {
 		t.Fatalf("Erro ao gravar os dados no banco: %s", err.Error())
 	}
 	//Teste de busca no banco de dados
-	saved, err := service.Get(1)
+	saved, err := service.Get(getID)
 	if err != nil {
 		t.Fatalf("Erro ao fazer busca no banco de dados...%s", err.Error())
 	}
-	if saved.ID != 1 {
-		t.Fatalf("Dados invalido. Esperando %d, e foi recebido %d", 1, saved.ID)
+	if saved.ID != getID {
+		t.Fatalf("ID invalido ou não existe. Esperando %d, e foi recebido %d", saved.ID, getID)
 	}
 }
 
