@@ -33,7 +33,7 @@ func NewService(db *sql.DB) *Service {
 	}
 }
 
-// Declarando as (funções/metodos) que implementam a interface UseCase{}, que serão implentadas posteriomente
+// Declarando as (funções/metodos) que implementam a interface UseCase{}, que serão implementadas posteriomente
 func (s *Service) GetAll() ([]*entities.Beer, error) {
 	// Result é um slice de ponteiros do tipo Beer
 	// Se existir um erro, a função vai retorna-lo, e o erro deve ser tratado
