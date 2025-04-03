@@ -1,12 +1,15 @@
 package dbase
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+)
 
-func DbConnection() (dbConn *sql.DB) {
-	dbConn, err := sql.Open("sqlite3", "./database/beer.db")
+func DbConnection() (dbConn *sql.DB, err error) {
+	dbConn, err = sql.Open("sqlite3", "./database/beer.db")
 	if err != nil {
 		dbConn.Close()
-		panic(err)
+		log.Fatal(err.Error())
 	}
-	return dbConn
+	return dbConn, err
 }
