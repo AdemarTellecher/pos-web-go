@@ -10,7 +10,6 @@ import (
 	"github.com/AdemarTellecher/pos-web-go/core/services"
 	"github.com/AdemarTellecher/pos-web-go/dbase"
 	"github.com/gorilla/mux"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/urfave/negroni"
 )
 
@@ -42,7 +41,7 @@ func main() {
 	}
 	err = srv.ListenAndServe()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err.Error())
 	}
 }
 func hello(service services.UseCase) http.Handler {
