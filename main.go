@@ -17,7 +17,6 @@ import (
 func main() {
 	db, err := dbase.DbConnection()
 
-	defer db.Close()
 	service := services.NewService(db)
 
 	r := mux.NewRouter()
@@ -26,6 +25,7 @@ func main() {
 	n := negroni.New(
 		negroni.NewLogger(),
 	)
+	defer db.Close()
 
 	r.Handle("/v1/beer", n.With(
 		negroni.Wrap(hello(service)),
